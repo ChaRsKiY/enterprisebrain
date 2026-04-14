@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Impressum | Enterprisebrain.eu"
+  description="Impressum von Enterprisebrain.eu – vcsupport GmbH, Towerstraße 3, 1300 Wien-Flughafen."
+  noindex
+>
+  <Navbar />
+
+  <main>
+    <section class="relative bg-white pt-36 pb-20 overflow-hidden min-h-screen">
+      <div class="absolute inset-0 hero-grid opacity-60 pointer-events-none"></div>
+      <div class="relative max-w-4xl mx-auto px-6">
+        <h1 class="text-4xl md:text-5xl font-display font-800 text-carbon mb-10 text-balance animate-fade-in-up">
+          Impressum
+        </h1>
+        <div class="text-ash text-lg space-y-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+          <p class="text-xl font-display font-700 text-carbon">
+            vcsupport GmbH
+          </p>
+          <p>
+            Vienna Airport Conference & Innovation Center, Towerstraße 3<br/>
+            1300 Wien-Flughafen<br/>
+            Österreich
+          </p>
+          <div class="space-y-2 mt-8">
+            <p>
+              <strong class="text-carbon font-600">Telefon:</strong> <a href="tel:+436645332164" class="text-primary hover:underline transition-colors">+43 664 5332164</a>
+            </p>
+            <p>
+              <strong class="text-carbon font-600">Mail:</strong> <a href="mailto:office@enterprisebrain.eu" class="text-primary hover:underline transition-colors">office@enterprisebrain.eu</a>
+            </p>
+          </div>
+          
+          <div class="space-y-2 mt-8">
+            <p>
+              <strong class="text-carbon font-600">Unternehmensgegenstand:</strong> IT-Dienstleistungen
+            </p>
+            <p>
+              <strong class="text-carbon font-600">Firmenbuchgericht:</strong> Landesgericht Eisenstadt, Firmenbuchnummer: FN606513g
+            </p>
+            <p>
+              <strong class="text-carbon font-600">Umsatzsteuer-Identifikationsnummer (UID):</strong> ATU79570215
+            </p>
+            <p>
+              <strong class="text-carbon font-600">Geschäftsführer:</strong> Alexander Verant
+            </p>
+          </div>
+          
+          <p class="mt-8 text-base">
+            Zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle sind wir nicht verpflichtet und nicht bereit.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

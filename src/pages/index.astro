@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import HeroSection from '../components/HeroSection.astro';
+import VideoSection from '../components/VideoSection.astro';
+import ProductSection from '../components/ProductSection.astro';
+import UseCasesPreview from '../components/UseCasesPreview.astro';
+import ContactSection from '../components/ContactSection.astro';
+import PartnersSection from '../components/PartnersSection.astro';
+import MotivationSection from '../components/MotivationSection.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title="Enterprisebrain.eu | Unternehmens KI mit nahtloser SAP-Integration"
+  description="Maßgeschneiderte KI-Lösung mit vollständiger SAP-Integration. Automatisieren Sie operative Prozesse, entlasten Sie Mitarbeitende und steigern Sie Effizienz und Wettbewerbsfähigkeit nachhaltig."
+>
+  <Navbar />
+  <main>
+    <HeroSection />
+    <VideoSection />
+    <ProductSection />
+    <UseCasesPreview />
+    <PartnersSection />
+    <MotivationSection />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

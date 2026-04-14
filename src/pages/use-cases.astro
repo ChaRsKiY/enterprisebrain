@@ -1,0 +1,222 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import UseCaseCard from "../components/UseCaseCard.astro";
+---
+
+<BaseLayout
+  title="Use Cases | Enterprisebrain.eu — KI-Lösungen mit SAP in der Praxis"
+  description="Entdecken Sie realisierte KI-Anwendungsfälle mit SAP-Integration: Profitabilitätsanalyse, Prozessautomatisierung, EWM Support und mehr — bereits live bei Kunden."
+>
+  <Navbar />
+
+  <main>
+    <section class="relative bg-white pt-36 pb-20 overflow-hidden">
+      <div class="absolute inset-0 hero-grid opacity-60 pointer-events-none">
+      </div>
+      <div
+        class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style="background: radial-gradient(circle, rgba(242,146,2,0.07) 0%, transparent 65%); transform: translate(30%, -30%);"
+      >
+      </div>
+      <div class="relative max-w-7xl mx-auto px-6">
+        <span
+          class="section-label animate-fade-in-up"
+          style="animation-delay: 0.1s;">Use Cases</span
+        >
+        <span
+          class="section-divider mt-3 mb-6 animate-fade-in-up"
+          style="animation-delay: 0.2s;"></span>
+        <h1
+          class="text-[clamp(2.5rem,5.5vw,4.5rem)] font-display font-800 text-carbon mb-6 max-w-3xl text-balance animate-fade-in-up"
+          style="animation-delay: 0.3s;"
+        >
+          KI-Lösungen in der Praxis — bereits live
+        </h1>
+        <p
+          class="text-ash text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-in-up"
+          style="animation-delay: 0.45s;"
+        >
+          Entdecken Sie eine Auswahl an realisierten Anwendungsfällen aus
+          Kundenprojekten. Diese Beispiele zeigen, wie unsere KI-Lösungen in der
+          Praxis Mehrwert schaffen und konkrete Unternehmensprozesse nachhaltig
+          verbessern.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-white py-6">
+      <div class="max-w-7xl mx-auto px-6">
+        <UseCaseCard
+          num="01"
+          title="SAP Profitabilitätsanalyse"
+          description='Unser Analyse Use Case "SAP-Profitabilitätsanalyse" ist live. Du kannst über SAP Profitabilitätsdaten stellen. Das heißt, man kann zeitabhängige Fragen zu Kennzahlen wie Umsatz, DB1, DB2, Kosten und Merkmalen wie Kunde, Kundengruppe, Kundenhierarchien, Produkt, Produktgruppen, Warenempfänger usw. stellen und diese auf unterschiedliche Art darstellen lassen (Excel, Graphiken, einfache Tabellen usw.).'
+          tag="Analyse"
+        >
+          <div class="uc01-video-wrap relative z-10 w-full">
+            <video
+              src="/usecases/ProfitabilityAnalyst.mov"
+              autoplay
+              muted
+              loop
+              playsinline
+              class="uc01-video w-full block"
+              style="aspect-ratio: 16/10; object-fit: cover;"></video>
+            <button
+              class="uc01-pause-btn absolute bottom-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95"
+              style="background: rgba(0,0,0,0.38); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);"
+              aria-label="Pause"
+              data-state="playing"
+            >
+              <svg
+                class="uc01-icon-pause"
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+              </svg>
+              <svg
+                class="uc01-icon-play"
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style="margin-left:1px;"
+              >
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </button>
+          </div>
+        </UseCaseCard>
+
+        <UseCaseCard
+          num="02"
+          title="SAP Prozessautomatisierung Kundenauftrag"
+          description='Unser Automatisierungs-Use-Case "SAP-Prozessautomatisierung Kundenauftrag" ist live. Hier werden Kundenmails (Bestellungen) automatisch abgegriffen, der Inhalt erkannt (Mail und PDF Anhang), interpretiert und mit oder ohne Human loop in SAP ein Kundenauftrag inklusive Dokumentenanhang angelegt. Hier kommt OCR und KI zum Einsatz.'
+          tag="Automatisierung"
+          reversed
+        />
+
+        <UseCaseCard
+          num="03"
+          title="SAP Prozessautomatisierung Eingangsrechnung"
+          description='Unser Automatisierungs-Use-Case "SAP-Prozessautomatisierung Eingangsrechnung" ist live. Hier werden Kundenmails (Rechnungen) automatisch abgegriffen, der Inhalt erkannt (Mail und PDF Anhang), interpretiert und mit oder ohne Human loop in SAP eine Eingangsrechnung inklusive Dokumentenanhang erfasst und zur Freigabe weitergeleitet. Hier kommt OCR, KI und ein SAP Workflow zum Einsatz.'
+          tag="Automatisierung"
+        />
+
+        <UseCaseCard
+          num="04"
+          title="SAP EWM Support"
+          description='Unser Support-Use-Case "SAP EWM Support" ist live. Dabei wird den SAP Benutzern ein Chatbot zur Verfügung gestellt, welcher Fragen zum hauseigenen individualisierten SAP EWM beantworten kann und Anweisungen zur Anwendung der verschiedenen Apps inklusive Screenshots geben kann. Sozusagen ein Guide durch das EWM!'
+          tag="Support"
+          reversed
+        />
+
+        <UseCaseCard
+          num="05"
+          title="SAP Prozessautomatisierung Bestellungen erzeugen"
+          description='Unser Automatisierungs-Use-Case "SAP-Prozessautomatisierung Bestellung" ist live. Hier werden SAP Bestands-, Bedarfs-, Zugangs-Daten gelesen, mit anderen externen Faktoren kombiniert, von der KI interpretiert und im SAP automatisch eine Bestellung erzeugt (mit oder ohne Human loop).'
+          tag="Automatisierung"
+        />
+
+        <UseCaseCard
+          num="06"
+          title="Prozessautomatisierung technischer Support-Anfragen"
+          description='Unser Automatisierungs-Use-Case "Prozessautomatisierung Technische Support-Anfragen" ist live. Hier werden E-Mails entgegengenommen, dazu dann Teams Dateien, alte Exchange Mails, Oracle-DB Infos und SAP-Daten gelesen und eine Antwort generiert und vorgeschlagen (Human loop).'
+          tag="Support"
+          reversed
+        />
+      </div>
+    </section>
+
+    <section class="bg-snow py-20 relative overflow-hidden">
+      <div class="absolute inset-0 hero-grid opacity-40 pointer-events-none">
+      </div>
+      <div class="relative max-w-3xl mx-auto px-6 text-center" data-animate>
+        <h2
+          class="text-3xl md:text-4xl font-display font-800 text-carbon mb-5 text-balance"
+        >
+          Ihr Use Case ist der nächste
+        </h2>
+        <p class="text-ash text-lg leading-relaxed mb-10">
+          Haben Sie konkrete Prozesse, die automatisiert oder durch KI
+          unterstützt werden könnten? Sprechen Sie mit uns — kostenlos und
+          unverbindlich.
+        </p>
+        <a href="/#kontakt" class="btn-primary">
+          Kostenloses Erstgespräch
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .uc01-pause-btn .uc01-icon-play {
+    display: none;
+  }
+  .uc01-pause-btn[data-state="paused"] .uc01-icon-pause {
+    display: none;
+  }
+  .uc01-pause-btn[data-state="paused"] .uc01-icon-play {
+    display: block;
+  }
+</style>
+
+<script>
+  function initVideoControls() {
+    const wraps = document.querySelectorAll<HTMLElement>(".uc01-video-wrap");
+    wraps.forEach(function (wrap) {
+      if (wrap.dataset.videoInitialized) return;
+      wrap.dataset.videoInitialized = "true";
+
+      const video = wrap.querySelector<HTMLVideoElement>("video");
+      const btn = wrap.querySelector<HTMLButtonElement>(".uc01-pause-btn");
+      if (!video || !btn) return;
+
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (video.paused) {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(function (error) {
+              console.log("Video playback interrupted:", error);
+            });
+          }
+          btn.setAttribute("data-state", "playing");
+          btn.setAttribute("aria-label", "Pause");
+        } else {
+          video.pause();
+          btn.setAttribute("data-state", "paused");
+          btn.setAttribute("aria-label", "Play");
+        }
+      });
+    });
+  }
+
+  function init() {
+    initVideoControls();
+  }
+
+  document.addEventListener("astro:page-load", init);
+  init();
+</script>

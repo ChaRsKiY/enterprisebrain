@@ -1,0 +1,87 @@
+---
+---
+
+<section class="bg-snow py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 dot-grid pointer-events-none"></div>
+
+  <div class="relative max-w-5xl mx-auto px-6">
+    <div class="text-center mb-12" data-animate>
+      <span class="section-label">Produkt-Demo</span>
+      <div class="section-divider mx-auto my-4"></div>
+      <h2 class="text-3xl md:text-4xl font-display font-700 text-carbon mt-4">
+        Unternehmens-KI mit SAP Integration
+      </h2>
+    </div>
+
+    <div
+      class="relative rounded-2xl overflow-hidden border border-black/8 shadow-[0_8px_40px_rgba(0,0,0,0.1)]"
+      data-animate
+      data-animate-delay="2"
+    >
+      <div
+        id="video-poster"
+        class="relative aspect-video bg-parchment flex items-center justify-center cursor-pointer group"
+        data-video-id="YOUR_VIDEO_ID"
+      >
+        <div
+          class="absolute inset-0 hero-grid opacity-60 pointer-events-none"
+        ></div>
+
+        <div
+          class="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          <span class="section-label" style="font-size: 0.6rem;">Unternehmens-KI mit SAP Integration</span>
+        </div>
+
+        <div class="relative z-10 flex flex-col items-center gap-5">
+          <button
+            class="w-20 h-20 rounded-full gradient-bg flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-glow-strong"
+            aria-label="Video abspielen"
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;" aria-hidden="true">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
+          <span class="text-sm text-ash font-display font-600 tracking-wide group-hover:text-carbon transition-colors">
+            Demo ansehen
+          </span>
+        </div>
+
+        <div class="absolute bottom-4 right-4 text-xs text-ash/50 font-display">01:27</div>
+      </div>
+
+      <div id="video-iframe-container" class="hidden aspect-video">
+        <iframe
+          id="video-iframe"
+          class="w-full h-full"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          title="Unternehmens-KI mit SAP Integration"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initVideo() {
+    const poster = document.getElementById('video-poster');
+    const iframeContainer = document.getElementById('video-iframe-container');
+    const iframe = document.getElementById('video-iframe') as HTMLIFrameElement;
+
+    if (!poster || !iframeContainer || !iframe) return;
+
+    const videoId = poster.getAttribute('data-video-id');
+    if (!videoId || videoId === 'YOUR_VIDEO_ID') return;
+
+    poster.addEventListener('click', () => {
+      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+      poster.classList.add('hidden');
+      iframeContainer.classList.remove('hidden');
+    });
+  }
+
+  document.addEventListener('astro:page-load', initVideo);
+  initVideo();
+</script>

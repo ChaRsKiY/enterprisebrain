@@ -1,0 +1,87 @@
+---
+const features = [
+  {
+    icon: `<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>`,
+    title: 'Analysen in Sekunden',
+    desc: 'Analyseabfragen über SAP-Daten werden sofort beantwortet — Umsatz, DB1, DB2, Kosten und mehr.',
+  },
+  {
+    icon: `<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>`,
+    title: 'Prozessautomatisierung',
+    desc: 'Routineabläufe wie Bestellungen, Rechnungen und Kundenaufträge werden automatisch verarbeitet.',
+  },
+  {
+    icon: `<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>`,
+    title: 'Fehler reduziert',
+    desc: 'Menschliche Fehler bei der Dateneingabe werden durch intelligente Validierung und KI-gestützte Prozesse minimiert.',
+  },
+  {
+    icon: `<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>`,
+    title: 'Mitarbeiterzufriedenheit',
+    desc: 'Die KI übernimmt Routineaufgaben und schafft wertvolle Zeit für kreative und strategische Tätigkeiten.',
+  },
+  {
+    icon: `<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>`,
+    title: 'On-Premise kompatibel',
+    desc: 'Nahtlose Anbindung an SAP-Systeme inklusive On-Premise-Installationen — ohne Cloud-Zwang.',
+  },
+  {
+    icon: `<path d="M13 10V3L4 14h7v7l9-11h-7z"/>`,
+    title: 'SAP-Aktionen auslösen',
+    desc: 'Die KI kann direkt SAP-Aktionen initiieren — von Bestellungen über Rechnungen bis zu Kundenaufträgen.',
+  },
+];
+---
+
+<section id="das-produkt" class="bg-snow py-24 lg:py-36 relative overflow-hidden">
+  <div
+    class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none opacity-40"
+    style="background: radial-gradient(circle, rgba(242,146,2,0.06) 0%, transparent 65%); transform: translate(30%, -30%);"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+      <div data-animate>
+        <span class="section-label" style="color: var(--color-primary);">Das Produkt</span>
+        <span class="section-divider mt-3 mb-6"></span>
+        <h2 class="text-4xl md:text-5xl font-display font-800 text-carbon mb-8 text-balance">
+          KI-Power direkt im SAP-System
+        </h2>
+        <div class="space-y-5 text-ash leading-relaxed">
+          <p>
+            Unser KI-Produkt unterstützt Unternehmen dabei, Effizienz und Wettbewerbsfähigkeit nachhaltig zu steigern. Dazu stellen wir leistungsstarke KI-Systeme bereit, die nahtlos mit SAP-Systemen — inklusive On-Premise-Installationen — verknüpft werden. Dadurch können SAP-Daten effizient genutzt und SAP-Aktionen direkt durch die KI ausgelöst werden.
+          </p>
+          <p>
+            Die Vorteile für Ihr Unternehmen sind vielfältig: Analyseabfragen werden in Sekunden beantwortet, Prozesse automatisiert, Fehler reduziert, Kundenbedürfnisse frühzeitig erkannt und Schulungsprozesse intelligent unterstützt.
+          </p>
+          <p>
+            Zusätzlich wird die tägliche Arbeit mit SAP deutlich erleichtert: Unsere KI macht komplexe Abläufe einfacher, intuitiver und schneller zugänglich.
+          </p>
+        </div>
+        <div class="mt-10">
+          <a href="/#kontakt" class="btn-outline-light">
+            Kostenloses Erstgespräch vereinbaren
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" data-animate data-animate-delay="2">
+        {features.map((feature) => (
+          <div class="card-light p-5 group">
+            <div
+              class="w-10 h-10 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-105"
+              style="background: linear-gradient(135deg, rgba(237,159,123,0.12) 0%, rgba(242,146,2,0.12) 100%);"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f29202" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={feature.icon} />
+            </div>
+            <h3 class="font-display font-700 text-carbon text-sm mb-1.5">{feature.title}</h3>
+            <p class="text-xs text-ash leading-relaxed">{feature.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

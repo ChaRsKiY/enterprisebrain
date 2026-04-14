@@ -1,0 +1,47 @@
+---
+const partners = [
+  {
+    src: '/logo.png',
+    alt: 'vconsult',
+    name: 'vconsult',
+    tagline: 'Merging Business & IT',
+  },
+  {
+    src: '/vconsult_partner.avif',
+    alt: 'Partner',
+    name: null,
+    tagline: null,
+  },
+];
+---
+
+<section class="bg-parchment py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14" data-animate>
+      <span class="section-label" style="color: var(--color-ash);">Partner &amp; Kunden</span>
+      <span class="section-divider mx-auto my-4"></span>
+      <h2 class="text-3xl md:text-4xl font-display font-800 text-carbon mt-4">
+        Unsere Partner und Kunden
+      </h2>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-20" data-animate data-animate-delay="2">
+      {partners.map((p) => (
+        <div class="flex items-center gap-4 shrink-0">
+          <img
+            src={p.src}
+            alt={p.alt}
+            height="56"
+            class="h-14 w-auto object-contain"
+          />
+          {p.name && (
+            <div>
+              <div class="font-display font-800 text-carbon text-xl tracking-tight leading-none">{p.name}</div>
+              <div class="text-[0.6rem] font-display font-600 tracking-[0.18em] uppercase text-ash mt-0.5">{p.tagline}</div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

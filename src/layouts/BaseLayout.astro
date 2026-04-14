@@ -1,0 +1,165 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "Enterprisebrain.eu | Unternehmens KI mit SAP-Integration",
+  description = "Maßgeschneiderte KI-Lösung mit vollständiger SAP-Integration. Automatisieren Sie Prozesse, entlasten Sie Mitarbeitende und steigern Sie Effizienz und Wettbewerbsfähigkeit nachhaltig.",
+  ogImage = "/og-image.jpg",
+  noindex = false,
+} = Astro.props;
+
+const siteURL = "https://enterprisebrain.eu";
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const ogImageURL = new URL(ogImage, siteURL);
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Enterprisebrain.eu",
+  url: siteURL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${siteURL}/logo.png`,
+  },
+  description:
+    "Maßgeschneiderte KI-Lösung mit vollständiger SAP-Integration für Unternehmen.",
+  email: "office@enterprisebrain.eu",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Towerstraße 3",
+    addressLocality: "Wien-Flughafen",
+    postalCode: "1300",
+    addressCountry: "AT",
+  },
+  sameAs: ["https://www.linkedin.com/company/enterprisebrain"],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Enterprisebrain.eu",
+  url: siteURL,
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f29202" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Enterprisebrain.eu" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="de_DE" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(organizationSchema)}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(websiteSchema)}
+    />
+
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+    <script>
+      function initScrollAnimations() {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: "0px 0px -32px 0px" },
+        );
+        document.querySelectorAll("[data-animate]").forEach((el) => {
+          observer.observe(el);
+        });
+      }
+
+      function initNavbarScroll() {
+        const navbar = document.getElementById("main-nav");
+        if (!navbar) return;
+        const onScroll = () => {
+          navbar.classList.toggle("nav-scrolled", window.scrollY > 24);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
+
+      function initMobileMenu() {
+        const toggle = document.getElementById("nav-toggle");
+        const menu = document.getElementById("nav-mobile");
+        const closeBtn = document.getElementById("nav-close");
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener("click", () => {
+          menu.classList.toggle("hidden");
+          document.body.classList.toggle("overflow-hidden");
+        });
+
+        closeBtn?.addEventListener("click", () => {
+          menu.classList.add("hidden");
+          document.body.classList.remove("overflow-hidden");
+        });
+
+        menu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            menu.classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+          });
+        });
+      }
+
+      function init() {
+        initScrollAnimations();
+        initNavbarScroll();
+        initMobileMenu();
+      }
+
+      document.addEventListener("astro:page-load", init);
+      init();
+    </script>
+  </body>
+</html>
