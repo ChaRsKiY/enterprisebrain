@@ -128,34 +128,9 @@ const websiteSchema = {
         onScroll();
       }
 
-      function initMobileMenu() {
-        const toggle = document.getElementById("nav-toggle");
-        const menu = document.getElementById("nav-mobile");
-        const closeBtn = document.getElementById("nav-close");
-        if (!toggle || !menu) return;
-
-        toggle.addEventListener("click", () => {
-          menu.classList.toggle("hidden");
-          document.body.classList.toggle("overflow-hidden");
-        });
-
-        closeBtn?.addEventListener("click", () => {
-          menu.classList.add("hidden");
-          document.body.classList.remove("overflow-hidden");
-        });
-
-        menu.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => {
-            menu.classList.add("hidden");
-            document.body.classList.remove("overflow-hidden");
-          });
-        });
-      }
-
       function init() {
         initScrollAnimations();
         initNavbarScroll();
-        initMobileMenu();
       }
 
       document.addEventListener("astro:page-load", init);

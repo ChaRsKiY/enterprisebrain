@@ -1,0 +1,69 @@
+---
+const features = [
+  {
+    title: 'DSGVO-konform',
+    description: 'Unsere Lösung entspricht vollständig der Datenschutz-Grundverordnung. Ihre Unternehmensdaten werden ausschließlich nach europäischen Standards verarbeitet.',
+    icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+  },
+  {
+    title: 'EU-Hosting',
+    description: 'Alle Daten bleiben in der Europäischen Union. Kein Transfer in Drittländer — volle Kontrolle und Transparenz über den Speicherort Ihrer sensiblen Unternehmensdaten.',
+    icon: `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+  },
+  {
+    title: 'Verschlüsselte Übertragung',
+    description: 'Alle Datenübertragungen zwischen Ihrem SAP-System und Enterprisebrain.eu erfolgen Ende-zu-Ende verschlüsselt. Kein ungesicherter Datenaustausch.',
+    icon: `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>`,
+  },
+  {
+    title: 'Keine Datenweitergabe',
+    description: 'Ihre Unternehmensdaten werden niemals an Dritte weitergegeben oder für das Training von KI-Modellen verwendet. Ihre Daten gehören ausschließlich Ihnen.',
+    icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="17"/><line x1="17" y1="11" x2="23" y2="17"/>`,
+  },
+  {
+    title: 'Rollenbasierte Zugriffsrechte',
+    description: 'Granulare Berechtigungskonzepte stellen sicher, dass nur autorisierte Mitarbeitende Zugang zu relevanten Daten und Funktionen erhalten.',
+    icon: `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`,
+  },
+  {
+    title: 'Enterprise-grade Sicherheit',
+    description: 'Regelmäßige Sicherheitsaudits, Penetrationstests und kontinuierliches Monitoring gewährleisten den Schutz Ihrer Infrastruktur auf höchstem Niveau.',
+    icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>`,
+  },
+];
+---
+
+<section class="bg-snow py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 dot-grid pointer-events-none"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16" data-animate>
+      <span class="section-label">Vertrauen & Sicherheit</span>
+      <div class="section-divider mx-auto my-4"></div>
+      <h2 class="text-3xl md:text-4xl font-display font-800 text-carbon mt-4">
+        Ihre Daten sind <span class="gradient-text">sicher</span>
+      </h2>
+      <p class="text-ash text-lg mt-4 max-w-xl mx-auto leading-relaxed">
+        Enterprise-KI erfordert Enterprise-Sicherheit. Datenschutz und Compliance sind keine Nachgedanken — sie sind die Grundlage unserer Lösung.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {features.map((f, i) => (
+        <div
+          class="flex gap-4 p-6 rounded-2xl bg-white border border-black/6 hover:border-primary/20 transition-colors duration-300"
+          data-animate
+          data-animate-delay={String(i + 1)}
+        >
+          <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={f.icon} />
+          </div>
+          <div>
+            <h3 class="font-display font-700 text-carbon text-sm mb-1.5">{f.title}</h3>
+            <p class="text-ash text-sm leading-relaxed">{f.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

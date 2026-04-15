@@ -1,0 +1,60 @@
+---
+const testimonials = [
+  {
+    quote: 'Enterprisebrain.eu hat unsere Profitabilitätsanalyse vollständig automatisiert. Was früher Stunden in Anspruch nahm, liefert die KI jetzt in Minuten — direkt aus unseren SAP-Daten.',
+    name: 'Geschäftsführer',
+    company: 'Austria Pet Food',
+    initial: 'A',
+  },
+  {
+    quote: 'Die nahtlose SAP-Integration war das Entscheidende für uns. Das Team von vconsult hat die Lösung schnell und professionell in unsere bestehende Infrastruktur eingebunden.',
+    name: 'IT-Leiter',
+    company: 'Mittelständisches Unternehmen',
+    initial: 'M',
+  },
+];
+---
+
+<section class="bg-parchment py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 dot-grid pointer-events-none"></div>
+  <div
+    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+    style="background: radial-gradient(circle, rgba(242,146,2,0.06) 0%, transparent 65%);"
+  ></div>
+
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14" data-animate>
+      <span class="section-label">Kundenstimmen</span>
+      <div class="section-divider mx-auto my-4"></div>
+      <h2 class="text-3xl md:text-4xl font-display font-800 text-carbon mt-4">
+        Was unsere Kunden sagen
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {testimonials.map((t, i) => (
+        <div
+          class="flex flex-col p-8 rounded-2xl bg-white border border-black/6 shadow-[0_2px_20px_rgba(0,0,0,0.05)]"
+          data-animate
+          data-animate-delay={String(i + 1)}
+        >
+          <svg class="w-8 h-8 text-primary/30 mb-5 flex-shrink-0" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7c0-1.657 1.343-3 3-3V8zm14 0c-3.314 0-6 2.686-6 6v10h10V14h-7c0-1.657 1.343-3 3-3V8z"/>
+          </svg>
+          <p class="text-carbon text-base leading-relaxed flex-1 mb-6">
+            {t.quote}
+          </p>
+          <div class="flex items-center gap-3 pt-6 border-t border-black/6">
+            <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center flex-shrink-0">
+              <span class="text-white font-display font-700 text-sm">{t.initial}</span>
+            </div>
+            <div>
+              <div class="font-display font-700 text-carbon text-sm">{t.name}</div>
+              <div class="text-ash text-xs mt-0.5">{t.company}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

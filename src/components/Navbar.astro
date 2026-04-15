@@ -4,6 +4,8 @@ const currentPath = Astro.url.pathname;
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/use-cases', label: 'Use Cases' },
+  { href: '/#das-produkt', label: 'Das Produkt' },
+  { href: '/#faq', label: 'FAQ' },
 ];
 ---
 
@@ -55,29 +57,29 @@ const navLinks = [
 
       <button
         id="nav-toggle"
-        class="md:hidden flex flex-col gap-1.5 p-2 text-ash hover:text-carbon transition-colors"
+        class="md:hidden flex flex-col justify-center gap-[5px] w-10 h-10 -mr-2 text-carbon"
         aria-label="Menü öffnen"
+        aria-expanded="false"
       >
-        <span class="block w-5 h-0.5 bg-current rounded-full"></span>
-        <span class="block w-5 h-0.5 bg-current rounded-full"></span>
-        <span class="block w-3.5 h-0.5 bg-current rounded-full"></span>
+        <span class="burger-line burger-line-1 block h-[2px] w-5 bg-current rounded-full origin-center"></span>
+        <span class="burger-line burger-line-2 block h-[2px] w-5 bg-current rounded-full origin-center"></span>
+        <span class="burger-line burger-line-3 block h-[2px] w-3.5 bg-current rounded-full origin-center"></span>
       </button>
     </div>
   </div>
 </header>
 
-<div
-  id="nav-mobile"
-  class="hidden fixed inset-0 z-[60] bg-white flex flex-col"
->
-  <div class="flex items-center justify-between px-6 py-5 border-b border-black/6">
+<div id="nav-backdrop" class="fixed inset-0 z-[59] bg-black/30 backdrop-blur-sm"></div>
+
+<div id="nav-mobile" class="fixed top-0 right-0 h-full w-full z-[60] bg-white flex flex-col">
+  <div class="flex items-center justify-between px-6 py-5 border-b border-black/6 shrink-0">
     <a href="/" class="flex items-center gap-3">
       <img src="/logo.png" alt="vconsult Logo" width="34" height="34" class="object-contain" />
       <span class="font-display font-800 text-carbon text-[0.95rem]">Enterprisebrain.eu</span>
     </a>
     <button
       id="nav-close"
-      class="p-2 text-ash hover:text-carbon transition-colors"
+      class="w-10 h-10 flex items-center justify-center text-ash hover:text-carbon transition-colors -mr-2"
       aria-label="Menü schließen"
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -86,21 +88,29 @@ const navLinks = [
     </button>
   </div>
 
-  <nav class="flex flex-col px-6 pt-8 gap-2">
-    {navLinks.map((link) => (
+  <nav class="flex flex-col px-6 pt-10 gap-1 flex-1 overflow-y-auto">
+    {navLinks.map((link, i) => (
       <a
         href={link.href}
-        class={`font-display font-700 text-4xl tracking-tight py-2 transition-colors ${
+        class={`nav-link font-display font-700 text-[2.6rem] leading-tight tracking-tight py-2 transition-colors ${
           currentPath === link.href ? 'text-primary' : 'text-carbon hover:text-primary'
         }`}
+        style={`--link-index: ${i};`}
       >
         {link.label}
       </a>
     ))}
+    <a
+      href="/#kontakt"
+      class="nav-link font-display font-700 text-[2.6rem] leading-tight tracking-tight py-2 text-carbon hover:text-primary transition-colors"
+      style="--link-index: 2;"
+    >
+      Kontakt
+    </a>
   </nav>
 
-  <div class="mt-auto px-6 pb-10 pt-8 border-t border-black/6">
-    <a href="/#kontakt" class="btn-primary w-full justify-center">
+  <div class="px-6 pb-10 pt-6 border-t border-black/6 shrink-0">
+    <a href="/#kontakt" class="btn-primary w-full justify-center nav-cta">
       Kostenloses Erstgespräch
     </a>
   </div>
@@ -115,4 +125,108 @@ const navLinks = [
     padding-top: 0.875rem;
     padding-bottom: 0.875rem;
   }
+
+  #nav-backdrop {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  #nav-mobile {
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+  }
+
+  body.menu-open #nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.menu-open #nav-mobile {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  .burger-line {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease,
+                width 0.3s ease;
+  }
+  body.menu-open .burger-line-1 {
+    transform: translateY(7px) rotate(45deg);
+  }
+  body.menu-open .burger-line-2 {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  body.menu-open .burger-line-3 {
+    width: 20px;
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @keyframes navLinkIn {
+    from {
+      opacity: 0;
+      transform: translateX(32px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  body.menu-open .nav-link {
+    animation: navLinkIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.15s + var(--link-index, 0) * 0.07s);
+  }
+  body.menu-open .nav-cta {
+    animation: navLinkIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.38s;
+  }
 </style>
+
+<script>
+  function initMobileMenu() {
+    var toggle = document.getElementById("nav-toggle");
+    if (!toggle || toggle.getAttribute("data-menu-init")) return;
+    toggle.setAttribute("data-menu-init", "true");
+
+    var close = document.getElementById("nav-close");
+    var backdrop = document.getElementById("nav-backdrop");
+    var mobile = document.getElementById("nav-mobile");
+    if (!close || !backdrop || !mobile) return;
+
+    function closeMenu() {
+      document.body.classList.remove("menu-open");
+      var t = document.getElementById("nav-toggle");
+      if (t) {
+        t.setAttribute("aria-expanded", "false");
+        t.setAttribute("aria-label", "Menü öffnen");
+      }
+    }
+
+    toggle.addEventListener("click", function(e) {
+      var btn = e.currentTarget as HTMLElement;
+      if (document.body.classList.contains("menu-open")) {
+        document.body.classList.remove("menu-open");
+        btn.setAttribute("aria-expanded", "false");
+        btn.setAttribute("aria-label", "Menü öffnen");
+      } else {
+        document.body.classList.add("menu-open");
+        btn.setAttribute("aria-expanded", "true");
+        btn.setAttribute("aria-label", "Menü schließen");
+      }
+    });
+
+    close.addEventListener("click", closeMenu);
+    backdrop.addEventListener("click", closeMenu);
+
+    mobile.querySelectorAll("a").forEach(function(link) {
+      link.addEventListener("click", closeMenu);
+    });
+  }
+
+  document.addEventListener("astro:page-load", initMobileMenu);
+  initMobileMenu();
+</script>

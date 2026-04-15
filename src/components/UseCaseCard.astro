@@ -17,7 +17,8 @@ const tagColors: Record<string, string> = {
 ---
 
 <article
-  class={`grid lg:grid-cols-2 gap-10 lg:gap-20 items-center py-16 border-b border-black/6 last:border-0 ${reversed ? 'lg:[&>*:first-child]:order-2' : ''}`}
+  id={`uc-${num}`}
+  class={`grid lg:grid-cols-2 gap-10 lg:gap-20 items-center py-16 border-b border-black/6 last:border-0 scroll-mt-32 ${reversed ? 'lg:[&>*:first-child]:order-2' : ''}`}
   data-animate
 >
   <div>

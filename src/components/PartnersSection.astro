@@ -1,7 +1,7 @@
 ---
 const partners = [
-  { src: '/partners/vconsult.png', alt: 'vconsult' },
-  { src: '/partners/austria_pet_food.avif', alt: 'Austria Pet Food' },
+  { src: '/partners/vconsult.png', alt: 'vconsult', width: 697, height: 185 },
+  { src: '/partners/austria_pet_food.avif', alt: 'Austria Pet Food', width: 800, height: 296 },
 ];
 ---
 
@@ -21,7 +21,9 @@ const partners = [
           <img
             src={p.src}
             alt={p.alt}
-            height="56"
+            width={p.width}
+            height={p.height}
+            loading="lazy"
             class="h-14 w-auto object-contain"
           />
         </div>

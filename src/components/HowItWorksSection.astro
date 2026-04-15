@@ -1,0 +1,71 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Kostenloses Erstgespräch',
+    description: 'Wir analysieren gemeinsam Ihre aktuellen Prozesse, identifizieren Optimierungspotenziale und besprechen, wie Enterprisebrain.eu in Ihre Infrastruktur passt.',
+  },
+  {
+    number: '02',
+    title: 'Konzeption & Planung',
+    description: 'Unser Team entwickelt eine maßgeschneiderte KI-Strategie für Ihr Unternehmen — inklusive SAP-Anbindung, Use-Case-Definition und Implementierungsplan.',
+  },
+  {
+    number: '03',
+    title: 'Integration & Einführung',
+    description: 'Wir verbinden Enterprisebrain.eu nahtlos mit Ihrem bestehenden SAP-System. Die Einführung erfolgt schnell und ohne Unterbrechung des laufenden Betriebs.',
+  },
+  {
+    number: '04',
+    title: 'Betrieb & laufende Optimierung',
+    description: 'Nach dem Go-live begleiten wir Sie kontinuierlich. Neue Use Cases, Performance-Optimierungen und Support sind fester Bestandteil unserer Zusammenarbeit.',
+  },
+];
+---
+
+<section id="wie-es-funktioniert" class="bg-white py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 hero-grid opacity-40 pointer-events-none"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16" data-animate>
+      <span class="section-label">Unser Prozess</span>
+      <div class="section-divider mx-auto my-4"></div>
+      <h2 class="text-3xl md:text-4xl font-display font-800 text-carbon mt-4">
+        Wie es <span class="gradient-text">funktioniert</span>
+      </h2>
+      <p class="text-ash text-lg mt-4 max-w-xl mx-auto leading-relaxed">
+        Von der ersten Idee bis zum produktiven Einsatz — transparent, schnell und ohne Risiko.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row lg:items-stretch gap-6 lg:gap-4">
+      {steps.map((step, i) => (
+        <Fragment>
+          <div
+            class="lg:flex-1 flex flex-col p-7 rounded-2xl bg-snow border border-black/6 hover:border-primary/20 transition-colors duration-300"
+            data-animate
+            data-animate-delay={String(i + 1)}
+          >
+            <span class="font-display font-800 text-[2.5rem] leading-none gradient-text opacity-60 mb-6 block">
+              {step.number}
+            </span>
+            <div class="w-8 h-0.5 gradient-bg rounded-full mb-4"></div>
+            <h3 class="font-display font-700 text-carbon text-base mb-3 leading-snug">
+              {step.title}
+            </h3>
+            <p class="text-ash text-sm leading-relaxed">
+              {step.description}
+            </p>
+          </div>
+          {i < steps.length - 1 && (
+            <div class="hidden lg:flex items-center justify-center flex-shrink-0 w-5 text-primary/30">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          )}
+        </Fragment>
+      ))}
+    </div>
+  </div>
+</section>

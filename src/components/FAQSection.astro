@@ -1,0 +1,112 @@
+---
+const faqs = [
+  {
+    question: 'Wie lange dauert die Integration in unser SAP-System?',
+    answer: 'Die technische Integration dauert in der Regel 2–4 Wochen, abhängig von der Komplexität Ihrer SAP-Landschaft. Wir sorgen dafür, dass der laufende Betrieb dabei nicht unterbrochen wird.',
+  },
+  {
+    question: 'Funktioniert Enterprisebrain.eu mit unserem bestehenden SAP-System?',
+    answer: 'Ja. Enterprisebrain.eu ist kompatibel mit SAP S/4HANA, SAP ECC sowie gängigen SAP-Cloud-Lösungen. Im Erstgespräch klären wir gemeinsam, welche Module für Ihre Use Cases relevant sind.',
+  },
+  {
+    question: 'Wie sicher sind unsere Unternehmensdaten?',
+    answer: 'Ihre Daten werden ausschließlich in der EU gehostet, DSGVO-konform verarbeitet und niemals für das Training von KI-Modellen verwendet. Alle Übertragungen sind verschlüsselt, der Zugriff rollenbasiert.',
+  },
+  {
+    question: 'Was kostet Enterprisebrain.eu?',
+    answer: 'Die Kosten hängen von der Anzahl der Use Cases, der Integrationskomplexität und dem gewünschten Supportumfang ab. Kontaktieren Sie uns für ein individuelles Angebot — das Erstgespräch ist kostenlos.',
+  },
+  {
+    question: 'Brauchen wir eine eigene IT-Infrastruktur oder Cloud-Umgebung?',
+    answer: 'Nein. Enterprisebrain.eu ist eine vollständig verwaltete Lösung. Sie benötigen keine eigene KI-Infrastruktur. Wir übernehmen Betrieb, Wartung und Updates vollständig.',
+  },
+  {
+    question: 'Können wir eigene Use Cases definieren?',
+    answer: 'Absolut. Die Lösung ist von Grund auf darauf ausgelegt, unternehmensspezifische Prozesse abzubilden. Wir entwickeln gemeinsam mit Ihnen Use Cases, die exakt auf Ihre Anforderungen zugeschnitten sind.',
+  },
+];
+---
+
+<section id="faq" class="bg-white py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 hero-grid opacity-40 pointer-events-none"></div>
+
+  <div class="relative max-w-3xl mx-auto px-6">
+    <div class="text-center mb-14" data-animate>
+      <span class="section-label">FAQ</span>
+      <div class="section-divider mx-auto my-4"></div>
+      <h2 class="text-3xl md:text-4xl font-display font-800 text-carbon mt-4">
+        Häufig gestellte Fragen
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+      {faqs.map((faq) => (
+        <div class="faq-item rounded-2xl border border-black/6 bg-snow overflow-hidden">
+          <button
+            class="faq-trigger flex items-center justify-between gap-4 w-full px-6 py-5 text-left hover:bg-parchment rounded-2xl transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span class="font-display font-700 text-carbon text-sm leading-snug">
+              {faq.question}
+            </span>
+            <svg
+              class="faq-chevron w-5 h-5 text-primary flex-shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-body">
+            <div class="px-6 pt-5 pb-5 border-t border-black/6">
+              <p class="text-ash text-sm leading-relaxed">{faq.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .faq-item.is-open .faq-body {
+    max-height: 300px;
+  }
+  .faq-chevron {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .faq-item.is-open .faq-chevron {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  function initFAQ() {
+    document.querySelectorAll(".faq-item:not([data-faq-init])").forEach(function(item) {
+      item.setAttribute("data-faq-init", "");
+      var trigger = item.querySelector(".faq-trigger");
+      if (!trigger) return;
+
+      trigger.addEventListener("click", function() {
+        item.classList.toggle("is-open");
+        var t = item.querySelector(".faq-trigger");
+        if (t) {
+          t.setAttribute("aria-expanded", String(item.classList.contains("is-open")));
+        }
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", initFAQ);
+  initFAQ();
+</script>

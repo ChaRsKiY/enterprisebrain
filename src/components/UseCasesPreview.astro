@@ -63,7 +63,7 @@ const tagColors: Record<string, string> = {
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {useCases.map((uc, i) => (
         <a
-          href="/use-cases"
+          href={`/use-cases#uc-${uc.num}`}
           class="card-light p-7 group block"
           data-animate
           data-animate-delay={String((i % 3) + 1)}
