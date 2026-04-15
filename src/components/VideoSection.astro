@@ -19,7 +19,6 @@
       data-animate
       data-animate-delay="2"
     >
-      <!-- Actual video (hidden until play) -->
       <video
         id="main-video"
         class="video-player w-full block"
@@ -30,7 +29,6 @@
         <source src="/usecases/ProfitabilityAnalyst.mov" type="video/mp4" />
       </video>
 
-      <!-- Poster overlay -->
       <div
         id="video-poster"
         class="relative bg-parchment flex items-center justify-center cursor-pointer group"
@@ -49,10 +47,8 @@
           >
         </div>
 
-        <!-- Play button with ripple -->
         <div class="relative z-10 flex flex-col items-center gap-5">
           <div class="relative">
-            <!-- ripple ring -->
             <span
               id="play-ripple"
               class="absolute inset-0 rounded-full bg-primary/30 scale-100 opacity-0"
@@ -131,15 +127,12 @@
     if (!poster || !video || !ripple) return;
 
     poster.addEventListener("click", () => {
-      // ripple burst
       ripple.classList.add("ripple-playing");
 
-      // poster fades out after short delay
       setTimeout(() => {
         poster.classList.add("poster-hiding");
       }, 120);
 
-      // show + play video after poster animation
       setTimeout(() => {
         poster.style.display = "none";
         video.style.display = "block";
