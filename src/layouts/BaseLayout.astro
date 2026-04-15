@@ -10,13 +10,13 @@ interface Props {
 }
 
 const {
-  title = "Enterprisebrain.eu | Unternehmens KI mit SAP-Integration",
-  description = "Maßgeschneiderte KI-Lösung mit vollständiger SAP-Integration. Automatisieren Sie Prozesse, entlasten Sie Mitarbeitende und steigern Sie Effizienz und Wettbewerbsfähigkeit nachhaltig.",
+  title = "Enterprisebrain.eu — KI mit SAP-Integration",
+  description = "Maßgeschneiderte Unternehmens-KI mit vollständiger SAP-Integration. Prozesse automatisieren, Mitarbeitende entlasten, Effizienz steigern.",
   ogImage = "/og-image.jpg",
   noindex = false,
 } = Astro.props;
 
-const siteURL = "https://enterprisebrain.eu";
+const siteURL = import.meta.env.SITE_URL || "https://enterprisebrain.eu";
 const canonicalURL = new URL(Astro.url.pathname, siteURL);
 const ogImageURL = new URL(ogImage, siteURL);
 

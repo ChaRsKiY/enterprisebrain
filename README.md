@@ -18,11 +18,23 @@ Marketing website for **Enterprisebrain.eu** — an enterprise AI product with n
 **Requirements:** Node.js >= 22.12
 
 ```bash
+cp .env.example .env   # set SITE_URL
 npm install
-npm run dev        # http://localhost:4321
-npm run build      # production build → dist/
-npm run preview    # preview production build locally
+npm run dev            # http://localhost:4321
+npm run build          # production build → dist/
+npm run preview        # preview production build locally
 ```
+
+## Environment Variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `SITE_URL` | Canonical site URL — used for OG tags, sitemap, and JSON-LD | `https://enterprisebrain.eu` |
+
+Copy `.env.example` to `.env` and set `SITE_URL` to your current deployment URL.  
+On Vercel, add `SITE_URL` in **Project Settings → Environment Variables**.
+
+`.env` is gitignored. Never commit real values.
 
 ## Project Structure
 
@@ -86,18 +98,9 @@ Scroll animations: add `data-animate` to any element. Optional stagger via `data
 
 - JSON-LD schemas (`Organization` + `WebSite`) in `BaseLayout.astro`
 - Open Graph + Twitter Card meta on all pages
+- Canonical URL and sitemap derived from `SITE_URL`
 - Sitemap auto-generated to `/sitemap-index.xml` on build
 - Legal pages (`/impressum`, `/datenschutz`) are `noindex`
-
-## Updating Content
-
-**Partners** — add image to `public/partners/`, add entry to the `partners` array in `PartnersSection.astro` with native `width`/`height` dimensions.
-
-**FAQ** — add entries to the `faqs` array in `FAQSection.astro`.
-
-**Testimonials** — update the `testimonials` array in `TestimonialsSection.astro`.
-
-**New use case** — add `<UseCaseCard>` in `use-cases.astro` (the `num` prop auto-generates the anchor id, e.g. `num="07"` → `id="uc-07"`), then add the matching entry to the `useCases` array in `UseCasesPreview.astro`.
 
 ## Docker
 
@@ -110,6 +113,16 @@ docker run -p 8080:80 enterprisebrain
 ```
 
 The image is a two-stage build — Node 22 Alpine builds the static site, Nginx Alpine serves it. The `nginx.conf` handles SPA-style routing, static asset caching (1 year, immutable), gzip compression, and the custom 404 page.
+
+## Updating Content
+
+**Partners** — add image to `public/partners/`, add entry to the `partners` array in `PartnersSection.astro` with native `width`/`height` dimensions.
+
+**FAQ** — add entries to the `faqs` array in `FAQSection.astro`.
+
+**Testimonials** — update the `testimonials` array in `TestimonialsSection.astro`.
+
+**New use case** — add `<UseCaseCard>` in `use-cases.astro` (the `num` prop auto-generates the anchor id, e.g. `num="07"` → `id="uc-07"`), then add the matching entry to the `useCases` array in `UseCasesPreview.astro`.
 
 ## Contact Form
 
