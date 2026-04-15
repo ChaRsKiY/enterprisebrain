@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <section class="bg-snow py-24 lg:py-32 relative overflow-hidden">
@@ -6,7 +7,7 @@
 
   <div class="relative max-w-5xl mx-auto px-6">
     <div class="text-center mb-12" data-animate>
-      <span class="section-label">Produkt-Demo</span>
+      <span class="section-label">Praxis Beispiel</span>
       <div class="section-divider mx-auto my-4"></div>
       <h2 class="text-3xl md:text-4xl font-display font-700 text-carbon mt-4">
         Unternehmens-KI mit SAP Integration
@@ -18,70 +19,140 @@
       data-animate
       data-animate-delay="2"
     >
+      <!-- Actual video (hidden until play) -->
+      <video
+        id="main-video"
+        class="video-player w-full block"
+        style="aspect-ratio:16/9; object-fit:cover; display:none; opacity:0; transition: opacity 0.6s ease;"
+        playsinline
+        controls
+      >
+        <source src="/usecases/ProfitabilityAnalyst.mov" type="video/mp4" />
+      </video>
+
+      <!-- Poster overlay -->
       <div
         id="video-poster"
-        class="relative aspect-video bg-parchment flex items-center justify-center cursor-pointer group"
-        data-video-id="YOUR_VIDEO_ID"
+        class="relative bg-parchment flex items-center justify-center cursor-pointer group"
+        style="aspect-ratio:16/9;"
       >
-        <div
-          class="absolute inset-0 hero-grid opacity-60 pointer-events-none"
-        ></div>
+        <div class="absolute inset-0 hero-grid opacity-60 pointer-events-none">
+        </div>
 
         <div
           class="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20"
         >
-          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-          <span class="section-label" style="font-size: 0.6rem;">Unternehmens-KI mit SAP Integration</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+          ></span>
+          <span class="section-label" style="font-size:0.6rem;"
+            >SAP Profitabilitätsanalyse — Live Praxis Beispiel</span
+          >
         </div>
 
+        <!-- Play button with ripple -->
         <div class="relative z-10 flex flex-col items-center gap-5">
-          <button
-            class="w-20 h-20 rounded-full gradient-bg flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-glow-strong"
-            aria-label="Video abspielen"
+          <div class="relative">
+            <!-- ripple ring -->
+            <span
+              id="play-ripple"
+              class="absolute inset-0 rounded-full bg-primary/30 scale-100 opacity-0"
+              style="transition: none;"></span>
+            <button
+              id="play-btn"
+              class="relative w-20 h-20 rounded-full gradient-bg flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-glow-strong"
+              aria-label="Video abspielen"
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="white"
+                style="margin-left:4px;"
+                aria-hidden="true"
+              >
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </button>
+          </div>
+          <span
+            class="text-sm text-ash font-display font-600 tracking-wide group-hover:text-carbon transition-colors"
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;" aria-hidden="true">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </button>
-          <span class="text-sm text-ash font-display font-600 tracking-wide group-hover:text-carbon transition-colors">
             Demo ansehen
           </span>
         </div>
 
-        <div class="absolute bottom-4 right-4 text-xs text-ash/50 font-display">01:27</div>
-      </div>
-
-      <div id="video-iframe-container" class="hidden aspect-video">
-        <iframe
-          id="video-iframe"
-          class="w-full h-full"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-          title="Unternehmens-KI mit SAP Integration"
-        ></iframe>
+        <div class="absolute bottom-4 right-4 text-xs text-ash/50 font-display">
+          Profitabilitätsanalyse
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<style>
+  @keyframes ripple-out {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(2.8);
+      opacity: 0;
+    }
+  }
+  .ripple-playing {
+    animation: ripple-out 0.6s ease-out forwards;
+  }
+  @keyframes poster-out {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+  }
+  .poster-hiding {
+    animation: poster-out 0.5s ease-in forwards;
+    pointer-events: none;
+  }
+</style>
+
 <script>
   function initVideo() {
-    const poster = document.getElementById('video-poster');
-    const iframeContainer = document.getElementById('video-iframe-container');
-    const iframe = document.getElementById('video-iframe') as HTMLIFrameElement;
+    const poster = document.getElementById(
+      "video-poster",
+    ) as HTMLElement | null;
+    const video = document.getElementById(
+      "main-video",
+    ) as HTMLVideoElement | null;
+    const ripple = document.getElementById("play-ripple") as HTMLElement | null;
+    if (!poster || !video || !ripple) return;
 
-    if (!poster || !iframeContainer || !iframe) return;
+    poster.addEventListener("click", () => {
+      // ripple burst
+      ripple.classList.add("ripple-playing");
 
-    const videoId = poster.getAttribute('data-video-id');
-    if (!videoId || videoId === 'YOUR_VIDEO_ID') return;
+      // poster fades out after short delay
+      setTimeout(() => {
+        poster.classList.add("poster-hiding");
+      }, 120);
 
-    poster.addEventListener('click', () => {
-      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
-      poster.classList.add('hidden');
-      iframeContainer.classList.remove('hidden');
+      // show + play video after poster animation
+      setTimeout(() => {
+        poster.style.display = "none";
+        video.style.display = "block";
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            video.style.opacity = "1";
+          });
+        });
+        video.play().catch(() => {});
+      }, 540);
     });
   }
 
-  document.addEventListener('astro:page-load', initVideo);
+  document.addEventListener("astro:page-load", initVideo);
   initVideo();
 </script>
