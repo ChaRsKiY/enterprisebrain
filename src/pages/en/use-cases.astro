@@ -1,11 +1,11 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/Navbar.astro";
-import Footer from "../components/Footer.astro";
-import UseCaseCard from "../components/UseCaseCard.astro";
-import { useTranslations, localePath } from "../i18n/utils";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import UseCaseCard from "../../components/UseCaseCard.astro";
+import { useTranslations, localePath } from "../../i18n/utils";
 
-const lang = 'de' as const;
+const lang = 'en' as const;
 const t = useTranslations(lang);
 const u = t.useCasesPage;
 ---
@@ -107,15 +107,9 @@ const u = t.useCasesPage;
 </BaseLayout>
 
 <style>
-  .uc01-pause-btn .uc01-icon-play {
-    display: none;
-  }
-  .uc01-pause-btn[data-state="paused"] .uc01-icon-pause {
-    display: none;
-  }
-  .uc01-pause-btn[data-state="paused"] .uc01-icon-play {
-    display: block;
-  }
+  .uc01-pause-btn .uc01-icon-play { display: none; }
+  .uc01-pause-btn[data-state="paused"] .uc01-icon-pause { display: none; }
+  .uc01-pause-btn[data-state="paused"] .uc01-icon-play { display: block; }
 </style>
 
 <script>
@@ -124,20 +118,13 @@ const u = t.useCasesPage;
     wraps.forEach(function (wrap) {
       if (wrap.dataset.videoInitialized) return;
       wrap.dataset.videoInitialized = "true";
-
       const video = wrap.querySelector<HTMLVideoElement>("video");
       const btn = wrap.querySelector<HTMLButtonElement>(".uc01-pause-btn");
       if (!video || !btn) return;
-
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
         if (video.paused) {
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(function (error) {
-              console.log("Video playback interrupted:", error);
-            });
-          }
+          video.play().catch(() => {});
           btn.setAttribute("data-state", "playing");
           btn.setAttribute("aria-label", "Pause");
         } else {
@@ -148,7 +135,6 @@ const u = t.useCasesPage;
       });
     });
   }
-
   document.addEventListener("astro:page-load", initVideoControls);
   initVideoControls();
 </script>

@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { useTranslations, localePath } from '../../i18n/utils';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const n = t.notFound;
+---
+
+<BaseLayout
+  title="Page not found | Enterprisebrain.eu"
+  description="The page you are looking for does not exist."
+  noindex
+  lang={lang}
+>
+  <Navbar lang={lang} />
+
+  <main class="relative min-h-screen bg-white flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 hero-grid opacity-60 pointer-events-none"></div>
+    <div
+      class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+      style="background: radial-gradient(circle, rgba(242,146,2,0.07) 0%, transparent 65%);"
+    ></div>
+
+    <div class="relative z-10 max-w-2xl mx-auto px-6 py-40 text-center">
+      <div
+        class="font-display font-800 leading-none mb-6 animate-fade-in-up gradient-text"
+        style="font-size: clamp(7rem, 20vw, 12rem); animation-delay: 0.05s;"
+      >
+        {n.title}
+      </div>
+
+      <span class="section-divider mx-auto block mb-8 animate-fade-in-up" style="animation-delay: 0.15s;"></span>
+
+      <h1
+        class="text-2xl md:text-3xl font-display font-800 text-carbon mb-4 animate-fade-in-up"
+        style="animation-delay: 0.25s;"
+      >
+        {n.message}
+      </h1>
+      <p
+        class="text-ash text-lg leading-relaxed mb-10 animate-fade-in-up"
+        style="animation-delay: 0.35s;"
+      >
+        {n.description}
+      </p>
+
+      <div
+        class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up"
+        style="animation-delay: 0.45s;"
+      >
+        <a href={localePath('/', lang)} class="btn-primary">
+          {n.backLabel}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href={localePath('/use-cases', lang)} class="btn-outline-light">
+          {n.useCasesLabel}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>

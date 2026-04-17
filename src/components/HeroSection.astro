@@ -1,4 +1,14 @@
 ---
+import type { Lang } from '../i18n/utils';
+import { useTranslations, localePath } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'de' } = Astro.props;
+const t = useTranslations(lang);
+const h = t.hero;
 ---
 
 <section class="relative min-h-screen bg-white flex items-center overflow-hidden">
@@ -18,42 +28,42 @@
   ></div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-28 w-full">
-    <div class="max-w-3xl mx-auto text-center">
+    <div class="max-w-4xl mx-auto text-center">
       <div
         class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-primary/20 bg-primary/6 mb-9 animate-fade-in-up"
         style="animation-delay: 0.15s;"
       >
         <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" style="box-shadow: 0 0 6px rgba(242,146,2,0.7);"></span>
-        <span class="section-label">Ein Produkt der vconsult Gruppe</span>
+        <span class="section-label">{h.badge}</span>
       </div>
 
       <h1
-        class="text-[clamp(2.8rem,6vw,5rem)] font-display font-800 text-carbon mb-7 animate-fade-in-up text-balance"
-        style="animation-delay: 0.3s;"
+        class={`font-display font-800 text-carbon mb-7 animate-fade-in-up ${lang === 'de' ? 'text-[clamp(2.2rem,4vw,3.5rem)]' : 'text-[clamp(2.8rem,6vw,5rem)] text-balance'}`}
+        style="animation-delay: 0.3s; hyphens: auto; overflow-wrap: break-word;"
       >
-        Unternehmens KI mit<br class="hidden sm:block" />
-        nahtloser <span class="gradient-text">SAP-Integration</span>
+        {h.headlineLine1}<br class="hidden sm:block" />
+        {h.headlineLine2} <span class="gradient-text">{h.headlineHighlight}</span>
       </h1>
 
       <p
         class="text-lg md:text-xl text-ash leading-relaxed max-w-2xl mx-auto mb-11 animate-fade-in-up"
         style="animation-delay: 0.5s;"
       >
-        Wir stellen Ihnen eine maßgeschneiderte KI-Lösung mit vollständiger SAP-Integration zur Verfügung. Damit automatisieren Sie operative Prozesse, entlasten Ihre Mitarbeitenden und schaffen Zeit für strategische Aufgaben.
+        {h.description}
       </p>
 
       <div
         class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up"
         style="animation-delay: 0.7s;"
       >
-        <a href="/#kontakt" class="btn-primary">
-          Kostenloses Erstgespräch
+        <a href={localePath('/#kontakt', lang)} class="btn-primary">
+          {h.ctaPrimary}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <a href="/use-cases" class="btn-outline-light">
-          Aktive Use Cases
+        <a href={localePath('/use-cases', lang)} class="btn-outline-light">
+          {h.ctaSecondary}
         </a>
       </div>
 
@@ -62,23 +72,23 @@
         style="animation-delay: 0.9s;"
       >
         <div>
-          <div class="text-2xl font-display font-800 gradient-text mb-0.5">24/7</div>
-          <div class="text-xs text-ash leading-snug">Automatische Verfügbarkeit</div>
+          <div class="text-2xl font-display font-800 gradient-text mb-0.5">{h.stat1Value}</div>
+          <div class="text-xs text-ash leading-snug">{h.stat1Label}</div>
         </div>
         <div>
-          <div class="text-2xl font-display font-800 gradient-text mb-0.5">100%</div>
-          <div class="text-xs text-ash leading-snug">SAP-kompatibel</div>
+          <div class="text-2xl font-display font-800 gradient-text mb-0.5">{h.stat2Value}</div>
+          <div class="text-xs text-ash leading-snug">{h.stat2Label}</div>
         </div>
         <div>
-          <div class="text-2xl font-display font-800 gradient-text mb-0.5">6+</div>
-          <div class="text-xs text-ash leading-snug">Live Use Cases</div>
+          <div class="text-2xl font-display font-800 gradient-text mb-0.5">{h.stat3Value}</div>
+          <div class="text-xs text-ash leading-snug">{h.stat3Label}</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style="animation-delay: 1.2s; animation-fill-mode: both;">
-    <span class="section-label opacity-40">Scroll</span>
+    <span class="section-label opacity-40">{h.scrollLabel}</span>
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="animate-scroll-bounce text-ash/40">
       <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>

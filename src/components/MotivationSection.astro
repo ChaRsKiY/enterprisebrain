@@ -1,4 +1,14 @@
 ---
+import type { Lang } from '../i18n/utils';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'de' } = Astro.props;
+const t = useTranslations(lang);
+const m = t.motivation;
 ---
 
 <section class="bg-snow py-24 lg:py-36 relative overflow-hidden">
@@ -10,19 +20,15 @@
   ></div>
 
   <div class="relative max-w-4xl mx-auto px-6 text-center">
-    <span class="section-label" data-animate>Unsere Geschichte</span>
+    <span class="section-label" data-animate>{m.label}</span>
     <span class="section-divider mx-auto my-4 block" data-animate data-animate-delay="1"></span>
     <h2 class="text-4xl md:text-5xl font-display font-800 text-carbon mt-4 mb-10 text-balance" data-animate data-animate-delay="2">
-      Unsere Motivation
+      {m.title}
     </h2>
 
     <div class="space-y-6 text-ash text-lg leading-relaxed" data-animate data-animate-delay="3">
-      <p>
-        Das Thema KI hat uns von Anfang an begeistert und fasziniert. Da wir langjährige und erfahrene SAP-Berater sind, haben wir uns intensive Gedanken zur Kombination von SAP und KI gemacht. Außerdem ist die Idee einer personalisierten, unternehmenseigenen KI auch unabhängig von SAP und dessen Daten interessant.
-      </p>
-      <p>
-        Wird diese dann zusätzlich mit SAP-Daten versorgt, so ist das Potential enorm. Angetrieben von diesen Gedanken und Ideen, haben wir unser Produkt umgesetzt und uns in diesem bahnbrechenden Bereich Knowhow angeeignet.
-      </p>
+      <p>{m.p1}</p>
+      <p>{m.p2}</p>
     </div>
 
     <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16" data-animate data-animate-delay="4">
@@ -35,8 +41,8 @@
           </svg>
         </div>
         <div>
-          <div class="font-display font-700 text-carbon text-sm">Erfahrene SAP-Berater</div>
-          <div class="text-ash text-xs mt-0.5">Jahrelange Praxiserfahrung</div>
+          <div class="font-display font-700 text-carbon text-sm">{m.stat1Title}</div>
+          <div class="text-ash text-xs mt-0.5">{m.stat1Sub}</div>
         </div>
       </div>
       <div class="flex flex-col items-center gap-3">
@@ -46,8 +52,8 @@
           </svg>
         </div>
         <div>
-          <div class="font-display font-700 text-carbon text-sm">KI-Pioniere</div>
-          <div class="text-ash text-xs mt-0.5">Bahnbrechende Lösungen seit Tag 1</div>
+          <div class="font-display font-700 text-carbon text-sm">{m.stat2Title}</div>
+          <div class="text-ash text-xs mt-0.5">{m.stat2Sub}</div>
         </div>
       </div>
       <div class="flex flex-col items-center gap-3">
@@ -57,8 +63,8 @@
           </svg>
         </div>
         <div>
-          <div class="font-display font-700 text-carbon text-sm">Messbare Ergebnisse</div>
-          <div class="text-ash text-xs mt-0.5">Nachhaltig steigender Geschäftserfolg</div>
+          <div class="font-display font-700 text-carbon text-sm">{m.stat3Title}</div>
+          <div class="text-ash text-xs mt-0.5">{m.stat3Sub}</div>
         </div>
       </div>
     </div>

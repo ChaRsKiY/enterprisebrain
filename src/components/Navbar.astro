@@ -1,11 +1,22 @@
 ---
+import type { Lang } from '../i18n/utils';
+import { useTranslations, localePath, alternatePath } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+  altHref?: string;
+}
+
+const { lang = 'de', altHref } = Astro.props;
+const t = useTranslations(lang);
 const currentPath = Astro.url.pathname;
+const altPath = altHref ?? alternatePath(Astro.url, lang === 'de' ? 'en' : 'de');
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/use-cases', label: 'Use Cases' },
-  { href: '/#das-produkt', label: 'Das Produkt' },
-  { href: '/#faq', label: 'FAQ' },
+  { href: localePath('/', lang), label: t.nav.home },
+  { href: localePath('/use-cases', lang), label: t.nav.useCases },
+  { href: localePath('/#das-produkt', lang), label: t.nav.product },
+  { href: localePath('/#faq', lang), label: t.nav.faq },
 ];
 ---
 
@@ -14,7 +25,7 @@ const navLinks = [
   class="fixed top-0 z-50 w-full transition-all duration-300 py-5 bg-white/80 border-b border-black/6 backdrop-blur-md"
 >
   <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3 group shrink-0">
+    <a href={localePath('/', lang)} class="flex items-center gap-3 group shrink-0">
       <img src="/logo.png" alt="vconsult Logo" width="36" height="36" class="object-contain" />
       <div class="leading-tight">
         <span class="block font-display font-800 text-carbon text-[0.95rem] tracking-tight">Enterprisebrain</span>
@@ -37,9 +48,18 @@ const navLinks = [
       ))}
     </nav>
 
-    <div class="flex items-center gap-4">
-      <a href="/#kontakt" class="hidden md:inline-flex btn-primary py-2.5 px-5 text-sm">
-        Kostenloses Erstgespräch
+    <div class="flex items-center gap-3">
+      <a href={localePath('/#kontakt', lang)} class="hidden md:inline-flex btn-primary py-2.5 px-5 text-sm">
+        {t.nav.cta}
+      </a>
+
+      <a
+        id="nav-lang-switch"
+        href={altPath}
+        class="hidden md:inline-flex items-center justify-center h-9 px-3 rounded-lg border border-black/10 text-xs font-display font-700 tracking-widest text-ash hover:text-carbon hover:border-black/20 transition-all"
+        aria-label={t.nav.langSwitchLabel}
+      >
+        {t.nav.langSwitchCode}
       </a>
 
       <a
@@ -58,7 +78,7 @@ const navLinks = [
       <button
         id="nav-toggle"
         class="md:hidden flex flex-col justify-center gap-[5px] w-10 h-10 -mr-2 text-carbon"
-        aria-label="Menü öffnen"
+        aria-label={t.nav.menuOpen}
         aria-expanded="false"
       >
         <span class="burger-line burger-line-1 block h-[2px] w-5 bg-current rounded-full origin-center"></span>
@@ -86,9 +106,22 @@ const navLinks = [
         </a>
       ))}
     </nav>
-    <div class="pt-5">
-      <a href="/#kontakt" class="btn-primary w-full justify-center nav-cta">
-        Kostenloses Erstgespräch
+    <div class="pt-5 flex flex-col gap-3">
+      <a href={localePath('/#kontakt', lang)} class="btn-primary w-full justify-center nav-cta">
+        {t.nav.cta}
+      </a>
+      <a
+        id="nav-lang-switch-mobile"
+        href={altPath}
+        class="flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl border border-black/10 text-xs font-display font-700 tracking-widest text-ash hover:text-carbon transition-colors"
+        aria-label={t.nav.langSwitchLabel}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        {t.nav.langSwitchCode}
       </a>
     </div>
   </div>
@@ -179,7 +212,6 @@ const navLinks = [
       var t = document.getElementById("nav-toggle");
       if (t) {
         t.setAttribute("aria-expanded", "false");
-        t.setAttribute("aria-label", "Menü öffnen");
       }
     }
 
@@ -188,11 +220,9 @@ const navLinks = [
       if (document.body.classList.contains("menu-open")) {
         document.body.classList.remove("menu-open");
         btn.setAttribute("aria-expanded", "false");
-        btn.setAttribute("aria-label", "Menü öffnen");
       } else {
         document.body.classList.add("menu-open");
         btn.setAttribute("aria-expanded", "true");
-        btn.setAttribute("aria-label", "Menü schließen");
       }
     });
 

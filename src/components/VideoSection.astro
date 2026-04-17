@@ -1,5 +1,14 @@
 ---
+import type { Lang } from '../i18n/utils';
+import { useTranslations } from '../i18n/utils';
 
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'de' } = Astro.props;
+const t = useTranslations(lang);
+const v = t.video;
 ---
 
 <section class="bg-snow py-24 lg:py-32 relative overflow-hidden">
@@ -7,10 +16,10 @@
 
   <div class="relative max-w-5xl mx-auto px-6">
     <div class="text-center mb-12" data-animate>
-      <span class="section-label">Praxis Beispiel</span>
+      <span class="section-label">{v.sectionLabel}</span>
       <div class="section-divider mx-auto my-4"></div>
       <h2 class="text-3xl md:text-4xl font-display font-700 text-carbon mt-4">
-        Unternehmens-KI mit SAP Integration
+        {v.title}
       </h2>
     </div>
 
@@ -31,20 +40,15 @@
 
       <div
         id="video-poster"
-        class="relative bg-parchment flex items-center justify-center cursor-pointer group"
-        style="aspect-ratio:16/9;"
+        class="relative bg-parchment flex items-center justify-center cursor-pointer group bg-cover bg-center"
+        style="aspect-ratio:16/9; background-image: url('/usecases/poster.png');"
       >
-        <div class="absolute inset-0 hero-grid opacity-60 pointer-events-none">
-        </div>
+        <div class="absolute inset-0 bg-carbon/30 group-hover:bg-carbon/20 transition-colors duration-300 pointer-events-none z-0"></div>
+        <div class="absolute inset-0 hero-grid opacity-30 pointer-events-none z-0"></div>
 
-        <div
-          class="absolute top-4 left-4 hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20"
-        >
-          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
-          ></span>
-          <span class="section-label" style="font-size:0.6rem;"
-            >SAP Profitabilitätsanalyse — Live Praxis Beispiel</span
-          >
+        <div class="absolute top-4 left-4 hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-carbon/60 backdrop-blur-md border border-white/10 z-10">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          <span class="section-label !text-snow" style="font-size:0.6rem;">{v.badgeText}</span>
         </div>
 
         <div class="relative z-10 flex flex-col items-center gap-5">
@@ -56,29 +60,20 @@
             <button
               id="play-btn"
               class="relative w-20 h-20 rounded-full gradient-bg flex items-center justify-center group-hover:scale-105 transition-transform duration-300 shadow-glow-strong"
-              aria-label="Video abspielen"
+              aria-label={v.playLabel}
             >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="white"
-                style="margin-left:4px;"
-                aria-hidden="true"
-              >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="margin-left:4px;" aria-hidden="true">
                 <path d="M8 5v14l11-7z"></path>
               </svg>
             </button>
           </div>
-          <span
-            class="text-sm text-ash font-display font-600 tracking-wide group-hover:text-carbon transition-colors"
-          >
-            Praxis Beispiel ansehen
+          <span class="text-sm text-snow/90 font-display font-600 tracking-wide group-hover:text-white transition-colors">
+            {v.watchLabel}
           </span>
         </div>
 
-        <div class="absolute bottom-4 right-4 text-xs text-ash/50 font-display">
-          Profitabilitätsanalyse
+        <div class="absolute bottom-4 right-4 text-xs text-snow/60 font-display z-10">
+          {v.bottomLabel}
         </div>
       </div>
     </div>
@@ -87,27 +82,15 @@
 
 <style>
   @keyframes ripple-out {
-    0% {
-      transform: scale(1);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(2.8);
-      opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(2.8); opacity: 0; }
   }
   .ripple-playing {
     animation: ripple-out 0.6s ease-out forwards;
   }
   @keyframes poster-out {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(1.03);
-    }
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.03); }
   }
   .poster-hiding {
     animation: poster-out 0.5s ease-in forwards;
@@ -117,29 +100,19 @@
 
 <script>
   function initVideo() {
-    const poster = document.getElementById(
-      "video-poster",
-    ) as HTMLElement | null;
-    const video = document.getElementById(
-      "main-video",
-    ) as HTMLVideoElement | null;
+    const poster = document.getElementById("video-poster") as HTMLElement | null;
+    const video = document.getElementById("main-video") as HTMLVideoElement | null;
     const ripple = document.getElementById("play-ripple") as HTMLElement | null;
     if (!poster || !video || !ripple) return;
 
     poster.addEventListener("click", () => {
       ripple.classList.add("ripple-playing");
-
-      setTimeout(() => {
-        poster.classList.add("poster-hiding");
-      }, 120);
-
+      setTimeout(() => { poster.classList.add("poster-hiding"); }, 120);
       setTimeout(() => {
         poster.style.display = "none";
         video.style.display = "block";
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            video.style.opacity = "1";
-          });
+          requestAnimationFrame(() => { video.style.opacity = "1"; });
         });
         video.play().catch(() => {});
       }, 540);

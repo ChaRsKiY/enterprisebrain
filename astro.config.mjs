@@ -5,7 +5,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://enterprisebrain.eu',
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+    }),
+  ],
+  i18n: {
+    defaultLocale: 'de',
+    locales: ['de', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },

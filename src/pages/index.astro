@@ -13,25 +13,28 @@ import PartnersSection from '../components/PartnersSection.astro';
 import MotivationSection from '../components/MotivationSection.astro';
 import FAQSection from '../components/FAQSection.astro';
 import ContactSection from '../components/ContactSection.astro';
+
+const lang = 'de' as const;
 ---
 
 <BaseLayout
   title="Enterprisebrain.eu — KI mit SAP-Integration"
   description="Maßgeschneiderte Unternehmens-KI mit vollständiger SAP-Integration. Prozesse automatisieren, Mitarbeitende entlasten, Effizienz steigern."
+  lang={lang}
 >
-  <Navbar />
+  <Navbar lang={lang} />
   <main>
-    <HeroSection />
-    <VideoSection />
-    <HowItWorksSection />
-    <ProductSection />
-    <UseCasesPreview />
-    <TestimonialsSection />
-    <SecuritySection />
-    <PartnersSection />
-    <MotivationSection />
-    <FAQSection />
-    <ContactSection />
+    <HeroSection lang={lang} />
+    <VideoSection lang={lang} />
+    <HowItWorksSection lang={lang} />
+    <ProductSection lang={lang} />
+    <UseCasesPreview lang={lang} />
+    <TestimonialsSection lang={lang} />
+    <SecuritySection lang={lang} />
+    <PartnersSection lang={lang} />
+    <MotivationSection lang={lang} />
+    <FAQSection lang={lang} />
+    <ContactSection lang={lang} />
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </BaseLayout>

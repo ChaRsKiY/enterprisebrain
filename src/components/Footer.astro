@@ -1,11 +1,22 @@
 ---
+import type { Lang } from '../i18n/utils';
+import { useTranslations, localePath, alternatePath } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+  altHref?: string;
+}
+
+const { lang = 'de', altHref } = Astro.props;
+const t = useTranslations(lang);
+const altPath = altHref ?? alternatePath(Astro.url, lang === 'de' ? 'en' : 'de');
 ---
 
 <footer class="bg-snow border-t border-black/6">
   <div class="max-w-7xl mx-auto px-6 pt-16 pb-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 pb-14 border-b border-black/6">
       <div>
-        <a href="/" class="flex items-center gap-3 mb-6">
+        <a href={localePath('/', lang)} class="flex items-center gap-3 mb-6">
           <img src="/logo.png" alt="vconsult Logo" width="36" height="36" class="object-contain" />
           <div class="leading-tight">
             <span class="block font-display font-800 text-carbon text-[0.95rem] tracking-tight">Enterprisebrain</span>
@@ -13,7 +24,7 @@
           </div>
         </a>
         <p class="text-ash text-sm leading-relaxed mb-6 max-w-xs">
-          Ein Produkt der vconsult Gruppe. Unternehmens-KI mit nahtloser SAP-Integration für nachhaltig mehr Effizienz.
+          {t.footer.description}
         </p>
         <div class="space-y-1.5">
           <a href="mailto:office@enterprisebrain.eu" class="block text-sm text-ash hover:text-carbon transition-colors">
@@ -40,48 +51,70 @@
       </div>
 
       <div>
-        <h3 class="section-label mb-5">Navigation</h3>
+        <h3 class="section-label mb-5">{t.footer.navTitle}</h3>
         <ul class="space-y-3">
           <li>
-            <a href="/" class="text-sm text-ash hover:text-carbon transition-colors">Home</a>
+            <a href={localePath('/', lang)} class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.navLinks.home}</a>
           </li>
           <li>
-            <a href="/use-cases" class="text-sm text-ash hover:text-carbon transition-colors">Use Cases</a>
+            <a href={localePath('/use-cases', lang)} class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.navLinks.useCases}</a>
           </li>
           <li>
-            <a href="/#das-produkt" class="text-sm text-ash hover:text-carbon transition-colors">Das Produkt</a>
+            <a href={localePath('/#das-produkt', lang)} class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.navLinks.product}</a>
           </li>
           <li>
-            <a href="/#wie-es-funktioniert" class="text-sm text-ash hover:text-carbon transition-colors">Wie es funktioniert</a>
+            <a href={localePath('/#wie-es-funktioniert', lang)} class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.navLinks.howItWorks}</a>
           </li>
           <li>
-            <a href="/#faq" class="text-sm text-ash hover:text-carbon transition-colors">FAQ</a>
+            <a href={localePath('/#faq', lang)} class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.navLinks.faq}</a>
           </li>
           <li>
-            <a href="/#kontakt" class="text-sm text-ash hover:text-carbon transition-colors">Kostenloses Erstgespräch</a>
+            <a href={localePath('/#kontakt', lang)} class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.navLinks.contact}</a>
           </li>
         </ul>
       </div>
 
       <div>
-        <h3 class="section-label mb-5">Rechtliches</h3>
+        <h3 class="section-label mb-5">{t.footer.legalTitle}</h3>
         <ul class="space-y-3">
           <li>
-            <a href="/impressum" class="text-sm text-ash hover:text-carbon transition-colors">Impressum</a>
+            <a href="/impressum" class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.impressum}</a>
           </li>
           <li>
-            <a href="/datenschutz" class="text-sm text-ash hover:text-carbon transition-colors">Datenschutz</a>
+            <a href="/datenschutz" class="text-sm text-ash hover:text-carbon transition-colors">{t.footer.datenschutz}</a>
           </li>
         </ul>
+
+        <div class="mt-8">
+          <h3 class="section-label mb-3">{t.footer.langTitle}</h3>
+          <div class="flex items-center gap-2">
+            <a
+              id="footer-lang-de"
+              href={lang === 'de' ? Astro.url.pathname : altPath}
+              class={`text-xs font-display font-700 tracking-widest px-2.5 py-1.5 rounded-lg border transition-all ${lang === 'de' ? 'border-primary/30 text-primary bg-primary/6' : 'border-black/10 text-ash hover:text-carbon hover:border-black/20'}`}
+              aria-current={lang === 'de' ? 'true' : undefined}
+            >
+              DE
+            </a>
+            <a
+              id="footer-lang-en"
+              href={lang === 'en' ? Astro.url.pathname : altPath}
+              class={`text-xs font-display font-700 tracking-widest px-2.5 py-1.5 rounded-lg border transition-all ${lang === 'en' ? 'border-primary/30 text-primary bg-primary/6' : 'border-black/10 text-ash hover:text-carbon hover:border-black/20'}`}
+              aria-current={lang === 'en' ? 'true' : undefined}
+            >
+              EN
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-xs text-ash/60">
-        © {new Date().getFullYear()} Enterprisebrain.eu — Ein Produkt der vconsult Gruppe. Alle Rechte vorbehalten.
+        © {new Date().getFullYear()} Enterprisebrain.eu — {t.footer.copyright}
       </p>
       <div class="flex items-center gap-1.5">
-        <span class="text-xs text-ash/40">Powered by</span>
+        <span class="text-xs text-ash/40">{t.footer.poweredBy}</span>
         <a href="https://vconsult.at" target="_blank" rel="noopener noreferrer" class="text-xs text-ash hover:text-carbon transition-colors font-display font-600">
           vconsult
         </a>

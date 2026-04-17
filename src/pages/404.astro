@@ -2,14 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import { useTranslations } from '../i18n/utils';
+
+const de = useTranslations('de');
+const en = useTranslations('en');
 ---
 
 <BaseLayout
-  title="Seite nicht gefunden | Enterprisebrain.eu"
-  description="Die gesuchte Seite existiert nicht."
+  title="404 | Enterprisebrain.eu"
+  description="Page not found."
   noindex
+  lang="de"
 >
-  <Navbar />
+  <Navbar lang="de" />
 
   <main class="relative min-h-screen bg-white flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 hero-grid opacity-60 pointer-events-none"></div>
@@ -29,34 +34,130 @@ import Footer from '../components/Footer.astro';
       <span class="section-divider mx-auto block mb-8 animate-fade-in-up" style="animation-delay: 0.15s;"></span>
 
       <h1
+        id="not-found-title"
         class="text-2xl md:text-3xl font-display font-800 text-carbon mb-4 animate-fade-in-up"
         style="animation-delay: 0.25s;"
       >
-        Seite nicht gefunden
+        {de.notFound.message}
       </h1>
       <p
+        id="not-found-desc"
         class="text-ash text-lg leading-relaxed mb-10 animate-fade-in-up"
         style="animation-delay: 0.35s;"
       >
-        Die gesuchte Seite existiert nicht oder wurde verschoben.
+        {de.notFound.description}
       </p>
 
       <div
         class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up"
         style="animation-delay: 0.45s;"
       >
-        <a href="/" class="btn-primary">
-          Zurück zur Startseite
+        <a id="not-found-back" href="/" class="btn-primary">
+          {de.notFound.backLabel}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <a href="/use-cases" class="btn-outline-light">
-          Use Cases ansehen
+        <a id="not-found-usecases" href="/use-cases" class="btn-outline-light">
+          {de.notFound.useCasesLabel}
         </a>
       </div>
     </div>
   </main>
 
-  <Footer />
+  <Footer lang="de" />
 </BaseLayout>
+
+<script
+  is:inline
+  type="application/json"
+  id="i18n-404"
+  set:html={JSON.stringify({
+    title: en.notFound.message,
+    desc: en.notFound.description,
+    back: en.notFound.backLabel,
+    useCases: en.notFound.useCasesLabel,
+    navSwitchCode: en.nav.langSwitchCode,
+    navSwitchLabel: en.nav.langSwitchLabel,
+  })}
+/>
+
+<script>
+  function init404() {
+    if (!location.pathname.startsWith('/en')) return;
+
+    const el = document.getElementById('i18n-404');
+    if (!el) return;
+
+    const raw = el.textContent ?? '{}';
+    const t = JSON.parse(raw) as {
+      title: string; desc: string; back: string; useCases: string;
+      navSwitchCode: string; navSwitchLabel: string;
+    };
+
+    document.documentElement.lang = 'en';
+
+    const titleEl = document.getElementById('not-found-title');
+    const descEl = document.getElementById('not-found-desc');
+    const backEl = document.getElementById('not-found-back') as HTMLAnchorElement | null;
+    const ucEl = document.getElementById('not-found-usecases') as HTMLAnchorElement | null;
+
+    if (titleEl) titleEl.textContent = t.title;
+    if (descEl) descEl.textContent = t.desc;
+    if (backEl) {
+      backEl.href = '/en/';
+      const textNode = [...backEl.childNodes].find((n) => n.nodeType === Node.TEXT_NODE);
+      if (textNode) textNode.textContent = t.back + ' ';
+    }
+    if (ucEl) {
+      ucEl.href = '/en/use-cases';
+      ucEl.textContent = t.useCases;
+    }
+
+    const navSwitch = document.getElementById('nav-lang-switch') as HTMLAnchorElement | null;
+    if (navSwitch) {
+      navSwitch.href = '/';
+      navSwitch.setAttribute('aria-label', t.navSwitchLabel);
+      navSwitch.textContent = t.navSwitchCode;
+    }
+
+    const navSwitchMobile = document.getElementById('nav-lang-switch-mobile') as HTMLAnchorElement | null;
+    if (navSwitchMobile) {
+      navSwitchMobile.href = '/';
+      navSwitchMobile.setAttribute('aria-label', t.navSwitchLabel);
+      const textNode = [...navSwitchMobile.childNodes].find((n) => n.nodeType === Node.TEXT_NODE);
+      if (textNode) textNode.textContent = t.navSwitchCode;
+    }
+
+    const internals = document.querySelectorAll<HTMLAnchorElement>(
+      '#main-nav a:not(#nav-lang-switch), #nav-mobile a:not(#nav-lang-switch-mobile), footer a:not(#footer-lang-de):not(#footer-lang-en)'
+    );
+    internals.forEach((a) => {
+      const href = a.getAttribute('href') ?? '';
+      if (href.startsWith('/') && !href.startsWith('/en') && !href.startsWith('//')) {
+        a.href = href === '/' ? '/en/' : '/en' + href;
+      }
+    });
+
+    const deBtn = document.getElementById('footer-lang-de') as HTMLAnchorElement | null;
+    const enBtn = document.getElementById('footer-lang-en') as HTMLAnchorElement | null;
+    const activeClasses = ['border-primary/30', 'text-primary', 'bg-primary/6'];
+    const inactiveClasses = ['border-black/10', 'text-ash', 'hover:text-carbon', 'hover:border-black/20'];
+
+    if (deBtn) {
+      deBtn.removeAttribute('aria-current');
+      deBtn.href = '/';
+      activeClasses.forEach((c) => deBtn.classList.remove(c));
+      inactiveClasses.forEach((c) => deBtn.classList.add(c));
+    }
+    if (enBtn) {
+      enBtn.setAttribute('aria-current', 'true');
+      enBtn.href = '/en/';
+      inactiveClasses.forEach((c) => enBtn.classList.remove(c));
+      activeClasses.forEach((c) => enBtn.classList.add(c));
+    }
+  }
+
+  document.addEventListener('astro:page-load', init404);
+  init404();
+</script>

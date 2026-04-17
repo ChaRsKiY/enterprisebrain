@@ -1,12 +1,15 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "../styles/globals.css";
+import type { Lang } from "../i18n/utils";
+import { alternatePath } from "../i18n/utils";
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
   noindex?: boolean;
+  lang?: Lang;
 }
 
 const {
@@ -14,20 +17,31 @@ const {
   description = "Maßgeschneiderte Unternehmens-KI mit vollständiger SAP-Integration. Prozesse automatisieren, Mitarbeitende entlasten, Effizienz steigern.",
   ogImage = "/og-image.jpg",
   noindex = false,
+  lang = "de",
 } = Astro.props;
 
-const siteURL = import.meta.env.SITE_URL || "https://enterprisebrain.eu";
-const canonicalURL = new URL(Astro.url.pathname, siteURL);
-const ogImageURL = new URL(ogImage, siteURL);
+const siteOrigin = new URL(
+  import.meta.env.SITE_URL ?? "https://enterprisebrain.eu"
+).origin;
+const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
+const ogImageURL = new URL(ogImage, siteOrigin);
+const deUrl = new URL(
+  lang === "de" ? Astro.url.pathname : alternatePath(Astro.url, "de"),
+  siteOrigin,
+);
+const enUrl = new URL(
+  lang === "en" ? Astro.url.pathname : alternatePath(Astro.url, "en"),
+  siteOrigin,
+);
 
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Enterprisebrain.eu",
-  url: siteURL,
+  url: siteOrigin,
   logo: {
     "@type": "ImageObject",
-    url: `${siteURL}/logo.png`,
+    url: `${siteOrigin}/logo.png`,
   },
   description:
     "Maßgeschneiderte KI-Lösung mit vollständiger SAP-Integration für Unternehmen.",
@@ -46,12 +60,12 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Enterprisebrain.eu",
-  url: siteURL,
+  url: siteOrigin,
 };
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,6 +74,9 @@ const websiteSchema = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={deUrl} />
     {noindex && <meta name="robots" content="noindex, follow" />}
 
     <title>{title}</title>
@@ -74,7 +91,7 @@ const websiteSchema = {
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="de_DE" />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "de_DE"} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

@@ -1,46 +1,20 @@
 ---
-const useCases = [
-  {
-    num: '01',
-    title: 'SAP Profitabilitätsanalyse',
-    desc: 'Zeitabhängige Analysen über Umsatz, DB1/DB2, Kosten und Kundenmerkmale — in Sekunden beantwortet und flexibel dargestellt.',
-    tag: 'Analyse',
-  },
-  {
-    num: '02',
-    title: 'Prozessautomatisierung Kundenauftrag',
-    desc: 'Kundenmails werden automatisch erkannt, interpretiert und Kundenaufträge inklusive Dokumenten-Anhang in SAP angelegt.',
-    tag: 'Automatisierung',
-  },
-  {
-    num: '03',
-    title: 'Prozessautomatisierung Eingangsrechnung',
-    desc: 'Rechnungs-Mails werden per OCR und KI verarbeitet und automatisch als Eingangsrechnung mit SAP-Workflow erfasst.',
-    tag: 'Automatisierung',
-  },
-  {
-    num: '04',
-    title: 'SAP EWM Support',
-    desc: 'Ein individualisierter SAP-EWM-Chatbot beantwortet Fragen und führt durch die verschiedenen Apps inklusive Screenshots.',
-    tag: 'Support',
-  },
-  {
-    num: '05',
-    title: 'Bestellungen automatisch erzeugen',
-    desc: 'SAP Bestands-, Bedarfs- und Zugangsdaten werden mit externen Faktoren kombiniert und automatisch zur Bestellung verarbeitet.',
-    tag: 'Automatisierung',
-  },
-  {
-    num: '06',
-    title: 'Technische Support-Anfragen',
-    desc: 'E-Mails, Teams-Dateien, Exchange Mails und SAP-Daten werden gebündelt analysiert und eine fundierte Antwort generiert.',
-    tag: 'Support',
-  },
-];
+import type { Lang } from '../i18n/utils';
+import { useTranslations, localePath } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'de' } = Astro.props;
+const t = useTranslations(lang);
+const u = t.useCasesPreview;
 
 const tagColors: Record<string, string> = {
   Analyse: 'bg-blue-50 text-blue-600 border-blue-200',
+  Analysis: 'bg-blue-50 text-blue-600 border-blue-200',
   Automatisierung: 'bg-primary/8 text-primary border-primary/20',
+  Automation: 'bg-primary/8 text-primary border-primary/20',
   Support: 'bg-secondary/10 text-[#c4642a] border-secondary/30',
 };
 ---
@@ -50,20 +24,20 @@ const tagColors: Record<string, string> = {
 
   <div class="relative max-w-7xl mx-auto px-6">
     <div class="text-center mb-16" data-animate>
-      <span class="section-label">Use Cases</span>
+      <span class="section-label">{u.label}</span>
       <span class="section-divider mx-auto my-4"></span>
       <h2 class="text-4xl md:text-5xl font-display font-800 text-carbon mt-4 mb-6 text-balance">
-        KI in der Praxis — bereits live
+        {u.title}
       </h2>
       <p class="text-ash text-lg max-w-2xl mx-auto leading-relaxed">
-        Entdecken Sie eine Auswahl an realisierten Anwendungsfällen aus Kundenprojekten. Diese Beispiele zeigen, wie unsere KI-Lösungen konkreten Mehrwert schaffen.
+        {u.subtitle}
       </p>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {useCases.map((uc, i) => (
+      {u.items.map((uc, i) => (
         <a
-          href={`/use-cases#uc-${uc.num}`}
+          href={`${localePath('/use-cases', lang)}#uc-${uc.num}`}
           class="card-light p-7 group block"
           data-animate
           data-animate-delay={String((i % 3) + 1)}
@@ -76,7 +50,7 @@ const tagColors: Record<string, string> = {
             >
               {uc.num}
             </span>
-            <span class={`inline-flex items-center px-2.5 py-1 rounded-full text-[0.6rem] font-display font-700 tracking-widest uppercase border ${tagColors[uc.tag]}`}>
+            <span class={`inline-flex items-center px-2.5 py-1 rounded-full text-[0.6rem] font-display font-700 tracking-widest uppercase border ${tagColors[uc.tag] ?? 'bg-snow text-ash border-black/10'}`}>
               {uc.tag}
             </span>
           </div>
@@ -92,7 +66,7 @@ const tagColors: Record<string, string> = {
           <p class="text-ash text-sm leading-relaxed">{uc.desc}</p>
 
           <div class="mt-6 flex items-center gap-1.5 text-xs font-display font-600 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Details ansehen
+            {u.detailsLabel}
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -102,8 +76,8 @@ const tagColors: Record<string, string> = {
     </div>
 
     <div class="text-center mt-14" data-animate>
-      <a href="/use-cases" class="btn-primary">
-        Alle Use Cases ansehen
+      <a href={localePath('/use-cases', lang)} class="btn-primary">
+        {u.cta}
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>

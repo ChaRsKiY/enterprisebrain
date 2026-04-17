@@ -1,4 +1,15 @@
 ---
+import type { Lang } from '../i18n/utils';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'de' } = Astro.props;
+const t = useTranslations(lang);
+const p = t.partners;
+
 const partners = [
   { src: '/partners/vconsult.png', alt: 'vconsult', width: 697, height: 185 },
   { src: '/partners/austria_pet_food.avif', alt: 'Austria Pet Food', width: 800, height: 296 },
@@ -8,21 +19,21 @@ const partners = [
 <section class="bg-parchment py-20 lg:py-28">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-14" data-animate>
-      <span class="section-label" style="color: var(--color-ash);">Partner &amp; Kunden</span>
+      <span class="section-label" style="color: var(--color-ash);">{p.label}</span>
       <span class="section-divider mx-auto my-4"></span>
       <h2 class="text-3xl md:text-4xl font-display font-800 text-carbon mt-4">
-        Unsere Partner und Kunden
+        {p.title}
       </h2>
     </div>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-20" data-animate data-animate-delay="2">
-      {partners.map((p) => (
+      {partners.map((partner) => (
         <div class="flex items-center shrink-0">
           <img
-            src={p.src}
-            alt={p.alt}
-            width={p.width}
-            height={p.height}
+            src={partner.src}
+            alt={partner.alt}
+            width={partner.width}
+            height={partner.height}
             loading="lazy"
             class="h-14 w-auto object-contain"
           />

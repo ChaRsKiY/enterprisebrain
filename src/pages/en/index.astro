@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import VideoSection from '../../components/VideoSection.astro';
+import HowItWorksSection from '../../components/HowItWorksSection.astro';
+import ProductSection from '../../components/ProductSection.astro';
+import UseCasesPreview from '../../components/UseCasesPreview.astro';
+import TestimonialsSection from '../../components/TestimonialsSection.astro';
+import SecuritySection from '../../components/SecuritySection.astro';
+import PartnersSection from '../../components/PartnersSection.astro';
+import MotivationSection from '../../components/MotivationSection.astro';
+import FAQSection from '../../components/FAQSection.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title={t.meta.defaultTitle}
+  description={t.meta.defaultDescription}
+  lang={lang}
+>
+  <Navbar lang={lang} />
+  <main>
+    <HeroSection lang={lang} />
+    <VideoSection lang={lang} />
+    <HowItWorksSection lang={lang} />
+    <ProductSection lang={lang} />
+    <UseCasesPreview lang={lang} />
+    <TestimonialsSection lang={lang} />
+    <SecuritySection lang={lang} />
+    <PartnersSection lang={lang} />
+    <MotivationSection lang={lang} />
+    <FAQSection lang={lang} />
+    <ContactSection lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</BaseLayout>
